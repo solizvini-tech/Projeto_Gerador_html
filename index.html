@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Divai — descreva seu projeto e gere o HTML com inteligência artificial.">
+    <meta name="theme-color" content="#0a0a12">
+    <title>Divai — crie projetos com IA</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7z' fill='%23ffffff'/></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- sprite de ícones SVG (usados via <use href="#i-...">) -->
+    <svg hidden xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+            <symbol id="i-sparkle" viewBox="0 0 24 24">
+                <path d="M12 2c.9 5.2 4.8 9.1 10 10-5.2.9-9.1 4.8-10 10-.9-5.2-4.8-9.1-10-10 5.2-.9 9.1-4.8 10-10z" fill="currentColor" stroke="none"/>
+            </symbol>
+            <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21l12.5-12.5"/>
+                <path d="M18.5 2l.8 2.7 2.7.8-2.7.8-.8 2.7-.8-2.7-2.7-.8 2.7-.8z" fill="currentColor" stroke="none"/>
+            </symbol>
+            <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/>
+                <circle cx="12" cy="12" r="3"/>
+            </symbol>
+            <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+            </symbol>
+            <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="12" height="12" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </symbol>
+            <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+            </symbol>
+            <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+            </symbol>
+            <symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
+            </symbol>
+            <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <polyline points="12 7 12 12 15.5 14"/>
+            </symbol>
+            <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </symbol>
+            <symbol id="i-bulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+            </symbol>
+            <symbol id="i-house" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5L12 3l9 7.5"/>
+                <path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/>
+                <path d="M10 21v-6h4v6"/>
+            </symbol>
+            <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"/>
+                <path d="M18 17V9"/>
+                <path d="M13 17V5"/>
+                <path d="M8 17v-3"/>
+            </symbol>
+            <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </symbol>
+            <symbol id="i-check-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 11 12 14 22 4"/>
+                <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </symbol>
+            <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"/>
+                <circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+            </symbol>
+            <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="11" width="16" height="10" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="bg-blobs" aria-hidden="true">
+        <span class="blob blob-1"></span>
+        <span class="blob blob-2"></span>
+    </div>
+
+    <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <a class="brand" href="./">
+            <svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg>
+            <span class="brand-name">Div<span class="brand-ai">ai</span></span>
+        </a>
+        <span class="badge">beta</span>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <span class="hero-pill"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-sparkle"/></svg>gerador de HTML com IA</span>
+            <h1>Descreva sua ideia.<br><span class="gradient-text">A IA constrói o resto.</span></h1>
+            <p>Escreva um prompt em português e receba o HTML completo — visualização, código e histórico — em segundos.</p>
+        </section>
+
+        <section class="card" id="generate-card" aria-labelledby="generate-title">
+            <h2 id="generate-title"><svg class="icon" aria-hidden="true"><use href="#i-wand"/></svg>Descreva seu projeto</h2>
+
+            <form id="generate-form">
+                <label class="field-label" for="prompt">Seu prompt</label>
+
+                <textarea
+                    id="prompt"
+                    name="prompt"
+                    rows="6"
+                    maxlength="2000"
+                    required
+                    placeholder="Ex: Crie um sistema de gerenciamento de clientes, com lista, busca e formulário de cadastro…"
+                ></textarea>
+
+                <div class="field-row">
+                    <span class="char-counter" id="char-counter">0 / 2000 caracteres</span>
+                </div>
+
+                <button class="btn btn-primary btn-lg" id="btn-generate" type="submit">
+                    <span class="spinner" hidden></span>
+                    <svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg>
+                    <span class="btn-text" data-label="Gerar projeto">Gerar projeto</span>
+                </button>
+            </form>
+        </section>
+
+        <section class="card" aria-labelledby="templates-title">
+            <h2 id="templates-title"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>Exemplos e templates</h2>
+            <p class="section-sub">Sem ideia? Clique num template para carregar o prompt no campo acima.</p>
+            <div class="templates" id="templates"></div>
+        </section>
+
+        <section class="card" aria-labelledby="preview-title">
+            <div class="preview-head">
+                <h2 id="preview-title"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>Visualização do projeto</h2>
+
+                <div class="tabs" role="tablist" aria-label="Modo de visualização">
+                    <button class="tab" id="tab-preview" type="button" role="tab" aria-selected="true"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-eye"/></svg>Visual</button>
+                    <button class="tab" id="tab-code" type="button" role="tab" aria-selected="false"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-code"/></svg>Código</button>
+                </div>
+
+                <div class="preview-actions">
+                    <button class="btn btn-ghost btn-sm" id="btn-copy" type="button" disabled><svg class="icon icon-sm" aria-hidden="true"><use href="#i-copy"/></svg>Copiar</button>
+                    <button class="btn btn-ghost btn-sm" id="btn-download" type="button" disabled><svg class="icon icon-sm" aria-hidden="true"><use href="#i-download"/></svg>Baixar .html</button>
+                    <button class="btn btn-ghost btn-sm" id="btn-new" type="button" disabled><svg class="icon icon-sm" aria-hidden="true"><use href="#i-plus"/></svg>Novo</button>
+                </div>
+            </div>
+
+            <div class="stage" id="stage">
+
+                <div class="stage-empty" id="preview-empty">
+                    <svg class="icon stage-icon" aria-hidden="true"><use href="#i-sparkle"/></svg>
+                    <p><strong>Nenhum projeto ainda.</strong><br>
+                    Descreva sua ideia lá em cima e clique em <em>Gerar projeto</em>.</p>
+                </div>
+
+                <div class="stage-loading" id="preview-loading" hidden>
+                    <span class="spinner spinner-lg"></span>
+                    <p id="loading-text">Gerando seu projeto…</p>
+                    <div class="skeletons" aria-hidden="true">
+                        <span class="skeleton skeleton-title"></span>
+                        <span class="skeleton"></span>
+                        <span class="skeleton"></span>
+                        <span class="skeleton skeleton-sm"></span>
+                    </div>
+                </div>
+
+                <iframe id="preview-frame" title="Pré-visualização do projeto gerado" sandbox="allow-scripts" hidden></iframe>
+
+                <pre id="code-view" class="code-view" hidden><code></code></pre>
+
+            </div>
+        </section>
+
+        <div class="cols">
+
+            <section class="card" aria-labelledby="modify-title">
+                <h2 id="modify-title"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg>Alterar projeto</h2>
+
+                <form id="modify-form">
+                    <fieldset id="modify-fieldset" disabled>
+                        <label class="field-label" for="modification">Descreva as alterações</label>
+
+                        <textarea
+                            id="modification"
+                            name="modification"
+                            rows="4"
+                            maxlength="2000"
+                            required
+                            placeholder="Ex: Adicione uma tela de login antes do painel…"
+                        ></textarea>
+
+                        <p class="form-hint" id="modify-hint">Gere um projeto primeiro para poder alterá-lo.</p>
+
+                        <button class="btn btn-primary" id="btn-modify" type="submit">
+                            <span class="spinner" hidden></span>
+                            <svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg>
+                            <span class="btn-text" data-label="Aplicar alterações">Aplicar alterações</span>
+                        </button>
+                    </fieldset>
+                </form>
+            </section>
+
+            <section class="card" aria-labelledby="history-title">
+                <div class="history-head">
+                    <h2 id="history-title"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Histórico de projetos</h2>
+                    <button class="btn btn-ghost btn-sm btn-danger" id="btn-clear-history" type="button" disabled>Limpar</button>
+                </div>
+                <p class="section-sub">Histórico compartilhado: qualquer pessoa com acesso pode abrir ou excluir os projetos. Exibindo os 30 mais recentes.</p>
+                <ul class="history-list" id="history-list"></ul>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p><svg class="icon icon-sm" aria-hidden="true"><use href="#i-sparkle"/></svg>Divai — plataforma de criação com IA</p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
