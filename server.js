@@ -57,7 +57,12 @@ function readBody(req, maxBytes = 2_000_000) {
   });
 }
 
-const BASE_INSTRUCTIONS = `Você é um engenheiro de software sênior. Gere aplicações web completas, funcionais e visualmente profissionais. Responda SOMENTE com um documento HTML completo, começando em <!DOCTYPE html>. Inclua CSS e JavaScript dentro do próprio HTML para que funcione sozinho ao abrir no navegador. Não use Markdown, cercas de código, explicações ou texto antes/depois do HTML. Todos os botões, formulários, filtros e interações solicitados devem funcionar de verdade. Use dados demonstrativos quando não houver backend de negócio solicitado e, quando apropriado, persista dados no localStorage. Faça layout responsivo e acessível. Nunca finja que uma integração externa existe: sinalize no próprio app quando credenciais ou serviços externos forem necessários.`;
+const BASE_INSTRUCTIONS = `Gere uma aplicação web completa, funcional e visualmente profissional que siga os requisitos do usuário. Responda somente com um documento HTML completo, começando em <!DOCTYPE html> e terminando em </html>. Inclua CSS em <style> e JavaScript em <script> no próprio arquivo. Nunca use Markdown nem dependa de arquivos CSS ou JS externos.
+
+- Adapte layout, paleta e tipografia ao tipo de projeto. Use hierarquia visual clara, espaçamento consistente, contraste legível e estados de foco visíveis. Use Grid ou Flexbox para adaptar a tela a celulares e computadores, sem rolagem horizontal. Inclua a meta viewport.
+- Quando imagens fizerem sentido (por exemplo, em portfólios, galerias e vitrines), integre-as à composição com <img>, texto alternativo adequado e dimensões definidas. Priorize os links HTTPS de imagem fornecidos pelo usuário. Na falta deles, use imagens demonstrativas de um serviço de fotos de exemplo, como https://picsum.photos/seed/divai-demo/960/640 (varie a semente por imagem). Trate as fotos de exemplo como ilustrativas, sem atribuir a elas um produto ou pessoa real. Reserve espaço para as imagens e inclua um fundo ou estado alternativo em CSS caso elas não carreguem. Em telas como formulários e painéis de dados, priorize a clareza e use imagens apenas quando forem úteis ou solicitadas.
+- Faça funcionar os botões, formulários, filtros e interações solicitados. Use dados demonstrativos na ausência de backend e use localStorage quando apropriado, tratando sua indisponibilidade na prévia. Sinalize quando integrações externas exigirem credenciais ou serviços próprios.
+- Mantenha o código enxuto e priorize completar o documento dentro do limite de resposta.`;
 
 function extractHTML(text) {
   if (typeof text !== "string") return "";
